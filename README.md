@@ -1,2 +1,2 @@
 # MobilGazeteHaberPortali
-Otomobil severler için otomotiv sektöründeki güncel gelişmeleri ve yenilikleri an be an takip etmelerine olanak sağlayan bir mobil otomobil gazetesi  
+Kullanıcıların, dünyada üzerinde olan biten güncel değişim, gelişim ve yenilikleri an be an takip etmelerine olanak sağlayan bir mobil gazete haber portalı
