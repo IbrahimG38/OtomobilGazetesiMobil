@@ -1,7 +1,8 @@
-import { View, Text, Switch } from 'react-native'
+import { View, Text, Switch, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { useNavigation } from "@react-navigation/native";
 import { useColorScheme } from "nativewind";
+import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
 
 export default function Header() {
     const navigation = useNavigation();
@@ -22,6 +23,17 @@ export default function Header() {
 
       <View>
         <Switch value={colorScheme == "dark"} onChange={toggleColorScheme} />
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Arama")}
+          className="bg-gray-200 dark:bg-green-800 rounded-full p-2"
+        >
+          <MagnifyingGlassIcon
+            size={25}
+            strokeWidth={2}
+            color={colorScheme == "dark" ? "white" : "green"}
+          />
+        </TouchableOpacity>
       </View>
     </View>
   );
