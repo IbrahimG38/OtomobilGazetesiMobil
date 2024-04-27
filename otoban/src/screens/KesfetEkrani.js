@@ -1,17 +1,22 @@
 import {
   View,
   Text,
+  ScrollView,
   TouchableOpacity,
   TextInput,
 } from "react-native";
-import React, { useEffect, useState,} from "react";
+import React, { useEffect, useState, useReducer } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useColorScheme } from "nativewind";
 import { StatusBar } from "expo-status-bar";
+import Loading from "../components/Loading";
 import { useQuery } from "@tanstack/react-query";
-
+import { categories } from "../constants";
+import CategoriesCard from "../components/CategoriesCard";
+import NewsSection from "../components/NewsSection";
 import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
 import { fetchDiscoverNews } from "../../utils/NewsApi";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
 
 export default function KesfetEkrani() {
@@ -42,7 +47,7 @@ export default function KesfetEkrani() {
       <StatusBar style={colorScheme == "dark" ? "light" : "dark"} />
 
       <View>
-        {/* Headerım */}
+        {/* Header */}
         <View className="px-4 mb-6 justify-between">
           <Text
             className="text-3xl text-green-800 dark:text-white"
@@ -63,7 +68,7 @@ export default function KesfetEkrani() {
           </Text>
         </View>
 
-         {/* Arama Çubuğu */}
+         {/* Search */}
          <View className="mx-4 mb-8 flex-row p-2 py-3 justify-between items-center bg-neutral-100 rounded-full">
           <TouchableOpacity className="pl-2">
             <MagnifyingGlassIcon size="25" color="gray" />
@@ -76,7 +81,52 @@ export default function KesfetEkrani() {
           />
         </View>
 
+           {/* Categories */}
+        <View className="flex-row mx-4">
+          <CategoriesCard
+            categories={categories}
+            activeCategory={activeCategory}
+            handleChangeCategory={handleChangeCategory}
+          />
+        </View>
+
+        <View className="h-full">
+          {/* Header Title */}
+          <View className="my-4 mx-4 flex-row justify-between items-center">
+            <Text
+              className="text-xl dark:text-white"
+              style={{
+                fontFamily: "SpaceGroteskBold",
+              }}
+            >
+              Discover
+            </Text>
+
+            <Text
+              className="text-base text-green-800 dark:text-neutral-300"
+              style={{
+                fontFamily: "SpaceGroteskBold",
+              }}
+            >
+              View all
+            </Text>
+          </View>
+
+          {isDiscoverLoading ? (
+            <View className="justify-center items-center">
+              <Loading />
             </View>
-        </SafeAreaView>
+          ) : (
+            <ScrollView
+              contentContainerStyle={{
+                paddingBottom: hp(70),
+              }}
+            >
+              <NewsSection newsProps={withoutRemoved} label="Discovery" />
+            </ScrollView>
+          )}
+        </View>
+      </View>
+    </SafeAreaView>
   );
 }
