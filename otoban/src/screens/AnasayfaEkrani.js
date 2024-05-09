@@ -14,66 +14,56 @@ import NewsSection from '../components/NewsSection';
 
 
 export default function AnasayfaEkrani() {
-  const {colorScheme, toggleColorScheme} = useColorScheme();
-  const [breakingNews, setBreakingNews] = useState([]);
-  const [recommendedNews, setRecommendedNews] = useState([]);
-
-  //console.log("breaking-news", breakingNews);
-
+  const { colorScheme, toggleColorScheme } = useColorScheme();
+  
   // Breaking News
-  const { isLoading: isBreakingNewsLoading } = useQuery({
-    queryKey: ["breakingNews"],
+  const { data, isLoading: isBreakingLoading } = useQuery({
+    queryKey: ["breakingNewss"],
     queryFn: fetchBreakingNews,
-    onSuccess: (data) => {
-      setBreakingNews(data.articles);
-    },
-    onError: (error) => {
-      console.log("Error fetching breaking news:", error);
-    },
   });
 
-    // Breaking News
-    const { isLoading: isRecommendedNewsLoading } = useQuery({
-      queryKey: ["recommendedNews"],
-      queryFn: fetchRecommendedNews,
-      onSuccess: (data) => {
-        setRecommendedNews(data.articles);
-      },
-      onError: (error) => {
-        console.log("Error fetching recommended news:", error);
-      },
+  // Recommended News
+  const { data: recommendedNew, isLoading: isRecommendedLoading } = useQuery({
+    queryKey: ["recommededNewss"],
+    queryFn: fetchRecommendedNews,
   });
 
   return (
-    <SafeAreaView>
+    <SafeAreaView className=" flex-1 bg-white dark:bg-neutral-900">
       <StatusBar style={colorScheme == "dark" ? "light" : "dark"} />
-      <Header />
 
-      {
-        isBreakingNewsLoading ? (
+      <View>
+        {/* Header */}
+        <Header />
+
+        {/* Breaking News */}
+        {isBreakingLoading ? (
           <Loading />
         ) : (
-          <View>
+          <View className="">
             <MiniHeader label="Breaking News" />
-            <BreakingNews label={"Breaking News"} data={breakingNews} />
+            <BreakingNews label="Breaking News" data={data.articles} />
           </View>
-        )
-      }
-      
-      <View>
-        <MiniHeader label="Recommended News" />
-      
-        <ScrollView
-          contentContainerStyle={{
-            paddingBottom: hp(80),
-          }}
-        >
-          {isRecommendedNewsLoading ? (
-            <Loading />
-          ):(
-            <NewsSection label="Recommendation" newsProps={recommendedNews} />
-          )}
-        </ScrollView>
+        )}
+
+        {/* Recommended News */}
+        <View>
+          <MiniHeader label="Recommended" />
+          <ScrollView
+            contentContainerStyle={{
+              paddingBottom: hp(80),
+            }}
+          >
+            {isRecommendedLoading ? (
+              <Loading />
+            ) : (
+              <NewsSection
+                label="Recommendation"
+                newsProps={recommendedNew.articles}
+              />
+            )}
+          </ScrollView>
+        </View>
       </View>
     </SafeAreaView>
   );

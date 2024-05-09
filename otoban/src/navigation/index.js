@@ -9,7 +9,7 @@ import KaydedilenlerEkrani from '../screens/KaydedilenlerEkrani';
 import AramaEkrani from '../screens/AramaEkrani';
 import AcilisEkranlari from '../screens/AcilisEkranlari';
 import HosgeldinEkrani from '../screens/HosgeldinEkrani';
-import IceriklerDetayEkrani from '../screens/IceriklerDetayEkrani';
+import IceriklerDetaylari from '../screens/IceriklerDetaylari';
 import { Ionicons } from '@expo/vector-icons';
 
 const Tab= createBottomTabNavigator();
@@ -75,7 +75,7 @@ export default function AppNavigation() {
             <Stack.Screen name="Acilislar" component={AcilisEkranlari} />
             <Stack.Screen name="Welcome" component={HosgeldinEkrani} />
             <Stack.Screen name="Arama" component={AramaEkrani} />
-            <Stack.Screen name="IceriklerDetaylari" component={IceriklerDetayEkrani} 
+            <Stack.Screen name="IceriklerDetaylari" component={IceriklerDetaylari}  
             options={{animation: 'slide_from_bottom'}}
             />
             <Stack.Screen name="AnasayfaTabs" component={TabNavigator} />

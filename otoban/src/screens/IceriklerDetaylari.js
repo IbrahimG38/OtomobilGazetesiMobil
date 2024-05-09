@@ -1,10 +1,10 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-export default function IceriklerDetayEkrani() {
+export default function IceriklerDetaylari() {
   return (
     <View>
-      <Text>IceriklerDetayEkrani</Text>
+      <Text>IceriklerDetaylari</Text>
     </View>
   )
 }
