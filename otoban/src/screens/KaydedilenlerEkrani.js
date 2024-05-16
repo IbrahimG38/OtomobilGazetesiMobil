@@ -15,7 +15,7 @@ export default function KaydedilenlerEkrani() {
   const [bookmarkStatus, setBookmarkStatus] = useState([]);
   const [urlList, setUrlList] = useState([]);
 
- // Function to handle click on an item
+ // Bir öğeye tıklamayı işlemeye yönelik işlev
  const handleClick = (item) => {
   navigation.navigate("IceriklerDetaylari", item);
 };
@@ -25,7 +25,7 @@ useEffect(() => {
   setUrlList(urls);
 }, [savedArticles]);
 
-// Function to format the date
+// Tarihi biçimlendirme işlevi
 function formatDate(isoDate) {
   const options = {
     weekday: "short",
@@ -42,13 +42,13 @@ const toggleBookmarkAndSave = async (item, index) => {
     const savedArticles = await AsyncStorage.getItem("savedArticles");
     let savedArticlesArray = savedArticles ? JSON.parse(savedArticles) : [];
 
-    // Check if the article is already in the bookmarked list
+    // Makalenin zaten yer imlerine eklenmiş listede olup olmadığını kontrol et
     const isArticleBookmarked = savedArticlesArray.some(
       (savedArticle) => savedArticle.url === item.url
     );
 
     if (!isArticleBookmarked) {
-      // If the article is not bookmarked, add it to the bookmarked list
+      // Makale yer imlerine eklenmemişse, onu yer imlerine eklenenler listesine ekle
       savedArticlesArray.push(item);
       await AsyncStorage.setItem(
         "savedArticles",
@@ -57,9 +57,9 @@ const toggleBookmarkAndSave = async (item, index) => {
       const updatedStatus = [...bookmarkStatus];
       updatedStatus[index] = true;
       setBookmarkStatus(updatedStatus);
-      // console.log("Article is bookmarked");
+      // console.log("Makale yer imlerine eklendi");
     } else {
-      // If the article is already bookmarked, remove it from the list
+      // Makale zaten yer imlerine eklenmişse onu listeden kaldır
       const updatedSavedArticlesArray = savedArticlesArray.filter(
         (savedArticle) => savedArticle.url !== item.url
       );
@@ -70,14 +70,14 @@ const toggleBookmarkAndSave = async (item, index) => {
       const updatedStatus = [...bookmarkStatus];
       updatedStatus[index] = false;
       setBookmarkStatus(updatedStatus);
-      // console.log("Article is removed from bookmarks");
+      // console.log("Makale yer imlerinden kaldırıldı");
     }
   } catch (error) {
-    // console.log("Error Saving/Removing Article", error);
+    // console.log("Makale Kaydedilirken/Kaldırılırken Hata oluştu", error);
   }
 };
 
-// Load saved articles from AsyncStorage when the screen gains focus
+// Ekran odaklandığında AsyncStorage'dan kayıtlı makaleleri yükle
 useFocusEffect(
   useCallback(() => {
     const loadSavedArticles = async () => {
@@ -91,17 +91,17 @@ useFocusEffect(
         //   savedArticlesArray.some((savedArticle) => savedArticle.url === url)
         // );
 
-        // Set the bookmark status for all items based on the loaded data
+        // Yüklenen verilere göre tüm öğeler için yer imi durumunu ayarla
         // setBookmarkStatus(isArticleBookmarkedList);
         setSavedArticles(savedArticlesArray);
       } catch (error) {
-        // console.log("Error loading saved articles", error);
+        // console.log("Kaydedilen makaleler yüklenirken hata oluştu", error);
       }
     };
 
     loadSavedArticles();
-    // console.log("Pull saved articles from AsyncStorage");
-  }, [navigation, urlList]) // Include 'navigation' in the dependencies array if needed
+    // console.log("Kaydedilen makaleleri AsyncStorage'dan çek");
+  }, [navigation, urlList]) // Gerekirse bağımlılıklar dizisine 'gezinmeyi' ekle
 );
 
 const clearSavedArticles = async () => {
@@ -110,7 +110,7 @@ const clearSavedArticles = async () => {
     setSavedArticles([]);
     console.log("Clear all saved articles");
   } catch (error) {
-    // console.log("Error clearing saved articles", error);
+    // console.log("Kaydedilen makaleler temizlenirken hata oluştu", error);
   }
 };
 
