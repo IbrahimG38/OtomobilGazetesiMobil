@@ -1,16 +1,16 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import React, { useCallback, useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Image, FlatList } from "react-native";
-import { BookmarkSquareIcon } from "react-native-heroicons/solid";
-import { heightPercentageToDP as hp } from "react-native-responsive-screen";
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { useFocusEffect, useNavigation } from "@react-navigation/native"
+import React, { useCallback, useEffect, useState } from "react"
+import { View, Text, TouchableOpacity, Image, FlatList } from "react-native"
+import { BookmarkSquareIcon } from "react-native-heroicons/solid"
+import { heightPercentageToDP as hp } from "react-native-responsive-screen"
 
 export default function NewsSection({ newsProps }) {
   const navigation = useNavigation();
   const [urlList, setUrlList] = useState([]);
   const [bookmarkStatus, setBookmarkStatus] = useState([]);
 
-  // Function to format the date
+  // Tarihi biçimlendirme işlevi
   function formatDate(isoDate) {
     const options = {
       weekday: "short",
@@ -22,30 +22,30 @@ export default function NewsSection({ newsProps }) {
     return date.toLocaleDateString(undefined, options);
   }
 
-  // Hook to set the URL list
+  // URL listesini ayarlamak için 
   useEffect(() => {
     const urls = newsProps.map((item) => item.url);
     setUrlList(urls);
   }, [newsProps]);
 
-  // Function to handle click on an item
+  // Bir öğeye tıklamayı işlemeye yönelik işlev
   const handleClick = (item) => {
     navigation.navigate("NewsDetails", item);
   };
 
-  // Function to toggle bookmark and save article
+  // Yer işaretini değiştirme ve makaleyi kaydetme işlevi
   const toggleBookmarkAndSave = async (item, index) => {
     try {
       const savedArticles = await AsyncStorage.getItem("savedArticles");
       let savedArticlesArray = savedArticles ? JSON.parse(savedArticles) : [];
 
-      // Check if the article is already in the bookmarked list
+      // Makalenin zaten yer imlerine eklenmiş listede olup olmadığını kontrol et
       const isArticleBookmarked = savedArticlesArray.some(
         (savedArticle) => savedArticle.url === item.url
       );
 
       if (!isArticleBookmarked) {
-        // If the article is not bookmarked, add it to the bookmarked list
+        // Makale yer imlerine eklenmemişse, onu yer imlerine eklenenler listesine ekle
         savedArticlesArray.push(item);
         await AsyncStorage.setItem(
           "savedArticles",
@@ -55,7 +55,7 @@ export default function NewsSection({ newsProps }) {
         updatedStatus[index] = true;
         setBookmarkStatus(updatedStatus);
       } else {
-        // If the article is already bookmarked, remove it from the list
+        // Makale zaten yer imlerine eklenmişse onu listeden kaldır
         const updatedSavedArticlesArray = savedArticlesArray.filter(
           (savedArticle) => savedArticle.url !== item.url
         );
@@ -72,7 +72,7 @@ export default function NewsSection({ newsProps }) {
     }
   };
 
-  // Effect to load saved articles from AsyncStorage when the component mounts
+  // Bileşen bağlandığında kayıtlı makaleleri AsyncStorage'dan yükleme etkisi
   useFocusEffect(
     useCallback(() => {
       const loadSavedArticles = async () => {
@@ -82,12 +82,12 @@ export default function NewsSection({ newsProps }) {
             ? JSON.parse(savedArticles)
             : [];
 
-          // Check if each URL in 'urlList' exists in the bookmarked list
+          // 'URL List'teki her URL'nin yer imlerine eklenen listede mevcut olup olmadığını kontrol et
           const isArticleBookmarkedList = urlList.map((url) =>
             savedArticlesArray.some((savedArticle) => savedArticle.url === url)
           );
 
-          // Set the bookmark status for all items based on the loaded data
+          // Yüklenen verilere göre tüm öğeler için yer imi durumunu ayarla
           setBookmarkStatus(isArticleBookmarkedList);
         } catch (error) {
           console.log("Error Loading Saved Articles", error);
@@ -95,10 +95,10 @@ export default function NewsSection({ newsProps }) {
       };
 
       loadSavedArticles();
-    }, [navigation, urlList]) // Include 'navigation' in the dependencies array if needed
+    }, [navigation, urlList]) // Gerekirse bağımlılıklar dizisine 'gezinmeyi' ekle
   );
 
-  // Component to render each item in the list
+  // Listedeki her öğeyi oluşturacak bileşen
   const renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity
@@ -107,7 +107,7 @@ export default function NewsSection({ newsProps }) {
         onPress={() => handleClick(item)}
       >
         <View className="flex-row justify-start w-[100%]shadow-sm">
-          {/* Image */}
+          {/* Görselim */}
           <View className="items-start justify-start w-[20%]">
             <Image
               source={{
@@ -121,17 +121,17 @@ export default function NewsSection({ newsProps }) {
             />
           </View>
 
-          {/* Content */}
+          {/* İçerik */}
 
           <View className="w-[70%] pl-4 justify-center space-y-1">
-            {/* Author */}
+            {/* Yazar */}
             <Text className="text-xs font-bold text-gray-900 dark:text-neutral-300">
               {item?.author?.length > 20
                 ? item.author.slice(0, 20) + "..."
                 : item.author}
             </Text>
 
-            {/* Title */}
+            {/* Başlık */}
             <Text
               className="text-neutral-800 capitalize max-w-[90%] dark:text-white "
               style={{
@@ -144,13 +144,13 @@ export default function NewsSection({ newsProps }) {
                 : item.title}
             </Text>
 
-            {/* Date */}
+            {/* Tarih */}
             <Text className="text-xs text-gray-700 dark:text-neutral-300">
               {formatDate(item.publishedAt)}
             </Text>
           </View>
 
-          {/* Bookmark */}
+          {/* Yer İşareti */}
           <View className="w-[10%] justify-center">
             <TouchableOpacity
               onPress={() => toggleBookmarkAndSave(item, index)}
@@ -167,7 +167,7 @@ export default function NewsSection({ newsProps }) {
 
   return (
     <View className="space-y-2 bg-white dark:bg-neutral-900">
-      {/* Header */}
+      {/* Header başlık */}
 
       <FlatList
         nestedScrollEnabled={true}

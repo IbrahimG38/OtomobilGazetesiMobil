@@ -47,7 +47,7 @@ export default function KesfetEkrani() {
       <StatusBar style={colorScheme == "dark" ? "light" : "dark"} />
 
       <View>
-        {/* Header */}
+        {/* Header  */}
         <View className="px-4 mb-6 justify-between">
           <Text
             className="text-3xl text-green-800 dark:text-white"
@@ -68,7 +68,7 @@ export default function KesfetEkrani() {
           </Text>
         </View>
 
-         {/* Search */}
+         {/* Arama kısmı */}
          <View className="mx-4 mb-8 flex-row p-2 py-3 justify-between items-center bg-neutral-100 rounded-full">
           <TouchableOpacity className="pl-2">
             <MagnifyingGlassIcon size="25" color="gray" />
@@ -81,7 +81,7 @@ export default function KesfetEkrani() {
           />
         </View>
 
-           {/* Categories */}
+           {/* kategorilerim */}
         <View className="flex-row mx-4">
           <CategoriesCard
             categories={categories}
@@ -91,7 +91,7 @@ export default function KesfetEkrani() {
         </View>
 
         <View className="h-full">
-          {/* Header Title */}
+          {/* Header Başlık */}
           <View className="my-4 mx-4 flex-row justify-between items-center">
             <Text
               className="text-xl dark:text-white"
