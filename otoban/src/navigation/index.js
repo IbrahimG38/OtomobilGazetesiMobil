@@ -67,7 +67,7 @@ export default function AppNavigation() {
   return (
     <NavigationContainer>
         <Stack.Navigator
-            initialRouteName='AnasayfaTabs'
+            initialRouteName='Acilislar'
             screenOptions={{
                 headerShown: false,
             }}

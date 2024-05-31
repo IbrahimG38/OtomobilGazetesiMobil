@@ -74,14 +74,73 @@ export default function IceriklerDetaylari() {
     }
   };
 
-//BURADAN DEVAM EDECEĞİM 
+  useEffect(() => {
+    // Load saved articles from AsyncStorage when the component mounts
+    const loadSavedArticles = async () => {
+      try {
+        const savedArticles = await AsyncStorage.getItem("savedArticles");
+        const savedArticlesArray = savedArticles
+          ? JSON.parse(savedArticles)
+          : [];
 
+        // Check if the article is already in the bookmarked list
+        const isArticleBookmarked = savedArticlesArray.some(
+          (savedArticle) => savedArticle.url === item.url
+        );
 
-// HABERLERE TIKLAYINCA ASIL KAYNAĞI GÖRÜNTÜLEYECEK ŞEKİLDE İÇERİKLERİNİ HAZIRLAMAYA BAŞLADIM.
+        toggleBookmark(isArticleBookmarked);
+        // console.log("Check if the current article is in bookmarks");
+      } catch (error) {
+        console.log("Error Loading Saved Articles", error);
+      }
+    };
 
+    loadSavedArticles();
+  }, [item.url]);
 
-//COMMIT 8.GONDERİM UNUTMA
+  return (
+    <>
+      <View className="w-full flex-row justify-between items-center px-4 pt-10 pb-4 bg-white">
+        <View className="bg-gray-100 p-2 rounded-full items-center justify-center">
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <ChevronLeftIcon size={25} strokeWidth={3} color="gray" />
+          </TouchableOpacity>
+        </View>
 
+        <View className="space-x-3 rounded-full items-center justify-center flex-row">
+          <TouchableOpacity className="bg-gray-100 p-2 rounded-full">
+            <ShareIcon size={25} color="gray" strokeWidth={2} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            className="bg-gray-100 p-2 rounded-full"
+            onPress={toggleBookmarkAndSave}
+          >
+            <BookmarkSquareIcon
+              size={25}
+              color={isBookmarked ? "green" : "gray"}
+              strokeWidth={2}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+      {/* WebView */}
+      <WebView
+        source={{ uri: item.url }}
+        onLoadStart={() => setVisible(true)}
+        onLoadEnd={() => setVisible(false)}
+      />
 
-
-//24.05.2024
+      {visible && (
+        <ActivityIndicator
+          size={"large"}
+          color={"green"}
+          style={{
+            position: "absolute",
+            top: height / 2,
+            left: width / 2,
+          }}
+        />
+      )}
+    </>
+  );
+}
