@@ -53,7 +53,7 @@ export default function AcilisEkranlari() {
       
       <View onLayout={onLayoutRootView}>
         <Text className="text-white text-3xl font-extrabold uppercase">
-          O T O B A N
+          S K Y 
           </Text>
       </View>
     </ImageBackground>

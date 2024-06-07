@@ -24,13 +24,13 @@ export default function AppNavigation() {
                 tabBarIcon: ({focused}) => {
                     let iconName;
 
-                    if (route.name === "Anasayfa"){
+                    if (route.name === "Home"){
                         iconName="home";
-                    }else if (route.name === "Kesfet"){
+                    }else if (route.name === "Discover"){
                         iconName="compass-outline";
-                    }else if (route.name === "Kaydedilenler"){
+                    }else if (route.name === "Saved"){
                         iconName="bookmark-outline";
-                    }else if (route.name === "Arama"){
+                    }else if (route.name === "Search"){
                         iconName="search-outline";
                     }
 
@@ -55,10 +55,10 @@ export default function AppNavigation() {
                 },
             })}
             >
-                <Tab.Screen name= "Anasayfa" component={AnasayfaEkrani} />
-                <Tab.Screen name= "Kesfet" component={KesfetEkrani} />
-                <Tab.Screen name= "Kaydedilenler" component={KaydedilenlerEkrani}/>
-                <Tab.Screen name= "Arama" component={AramaEkrani}/>
+                <Tab.Screen name= "Home" component={AnasayfaEkrani} />
+                <Tab.Screen name= "Discover" component={KesfetEkrani} />
+                <Tab.Screen name= "Saved" component={KaydedilenlerEkrani}/>
+                <Tab.Screen name= "Search" component={AramaEkrani}/>
 
             </Tab.Navigator>
         );

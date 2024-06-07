@@ -40,7 +40,7 @@ export default function HosgeldinEkrani() {
             fontFamily: "SpaceGroteskMedium",
           }}
           >
-            Discover the latest News with our Seamless Onboarding Experience
+            Get the most current and accurate news with us!
           </Text>
       </View>
     
@@ -55,7 +55,7 @@ export default function HosgeldinEkrani() {
             fontFamily: "SpaceGroteskMedium",
           }}
           >
-            Getting Started
+            Let's start
           </Text>
         </TouchableOpacity>
     </ImageBackground>  

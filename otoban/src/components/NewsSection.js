@@ -30,7 +30,7 @@ export default function NewsSection({ newsProps }) {
 
   // Bir öğeye tıklamayı işlemeye yönelik işlev
   const handleClick = (item) => {
-    navigation.navigate("NewsDetails", item);
+    navigation.navigate("IceriklerDetaylari", item);
   };
 
   // Yer işaretini değiştirme ve makaleyi kaydetme işlevi
